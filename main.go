@@ -58,19 +58,18 @@ func getAlbumByID(c *gin.Context) {
 
 // parameter sent by the client, then delete that album as a response.
 func deleteAlbumByID(c *gin.Context) {
-	// id := c.Param("id")
+	id := c.Param("id")
 
-	// // Loop over the list of albums, looking for
-	// // an album whose ID value matches the parameter.
-	// for _, a := range albums {
-	// 	if a.ID == id {
-	// 		tempId, err := id.ParseInt(strVar, 0, 8)
-	// 		albums = append(albums[:id], albums[id+1:]...)
-	// 		c.IndentedJSON(http.StatusOK, a)
-	// 		return
-	// 	}
-	// }
-	// c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
+	// Loop over the list of albums, looking for
+	// an album whose ID value matches the parameter.
+	for i, a := range albums {
+		if a.ID == id {
+			albums = append(albums[:i], albums[i+1:]...)
+			c.IndentedJSON(http.StatusOK, a)
+			return
+		}
+	}
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
 }
 
 func main() {
